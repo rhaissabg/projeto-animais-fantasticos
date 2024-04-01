@@ -269,3 +269,14 @@ body {
         max-height: 160px;
     }
 }
+
+.js .js-scroll {
+    opacity: 0;
+    transition: 0.3s;
+    transform: translateX(-30px);
+}
+
+.js .js-scroll.ativo {
+    opacity: 1;
+    transform: translateX(0);
+}

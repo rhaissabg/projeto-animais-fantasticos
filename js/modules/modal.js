@@ -1,27 +1,39 @@
-export default function initModal() {
-    const botaoAbrir = document.querySelector('[data-modal="abrir"]');
-    const botaoFechar = document.querySelector('[data-modal="fechar"]');
-    const containerModal = document.querySelector('[data-modal="container"]');
+export default class initModal {
+    constructor(botaoAbrir, botaoFechar, containerModal) {
+        this.botaoAbrir = document.querySelector(botaoAbrir);
+        this.botaoFechar = document.querySelector(botaoFechar);
+        this.containerModal = document.querySelector(containerModal);
 
-    if (botaoAbrir && botaoFechar && containerModal) {
-        function abrirModal(event) {
-            event.preventDefault();
-            containerModal.classList.add('ativo');
-        };
+        this.eventToggleModal = this.eventToggleModal.bind(this); 
+        this.cliqueForaModal = this.cliqueForaModal.bind(this); 
+    }
 
-        function fecharModal(event) {
-            event.preventDefault();
-            containerModal.classList.remove('ativo');
-        };
-
-        function cliqueForaModal(event) {
-            if (event.target === this) {
-                fecharModal(event);
-            };
-        };
-
-        botaoAbrir.addEventListener('click', abrirModal);
-        botaoFechar.addEventListener('click', fecharModal);
-        containerModal.addEventListener('click', cliqueForaModal);
+    toggleModal() {
+        this.containerModal.classList.toggle('ativo');
     };
+
+    eventToggleModal(event) {
+        event.preventDefault();
+        this.toggleModal();
+    }
+
+    cliqueForaModal(event) {
+        if (event.target === this.containerModal) {
+            this.toggleModal(event);
+        };
+    };
+
+    addModalEvent() {
+        this.botaoAbrir.addEventListener('click', this.eventToggleModal);
+        this.botaoFechar.addEventListener('click', this.eventToggleModal);
+        this.containerModal.addEventListener('click', this.cliqueForaModal);
+    }
+
+    init() {
+        if (this.botaoAbrir && this.botaoFechar && this.containerModal) {
+            this.addModalEvent();
+        }
+        return this;
+    }
+
 };
